@@ -36,7 +36,7 @@ jobs:
       - name: Create new directory and copy file
         run: |
           mkdir artifact
-          cp ./docs/API.html artifact/
+          cp ./docs/index.html artifact/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
