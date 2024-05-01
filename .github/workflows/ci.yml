@@ -1,0 +1,32 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main  
+      - master 
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Set this to the node version you are using
+
+    - name: Install dependencies
+      run: npm install  # Install node dependencies
+
+    - name: Run linter
+      run: npm run lint  # Run linter
+
+    - name: Run tests
+      run: npm run test  # Run your test scripts
+
+    - name: Build
+      run: npm run build  # Add a build script in your package.json if necessary
+
