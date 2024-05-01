@@ -24,21 +24,6 @@ jobs:
       - name: Run weekly task
         run: ./scripts/scheduled-task.sh
 
-      # - name: Send Mail Action
-      #   id: sendmail
-      #   uses: vineetchoudhary/mailgun-action@master
-      #   with:
-      #     api-key: ${{ secrets.MAILGUN_API_KEY }}
-      #     domain: ${{ secrets.MAILGUN_DOMAIN }}
-      #     to: ${{ secrets.TO }}
-      #     subject: 'Weekly Maintenance Completed'
-      #     body: |
-      #       <p>The weekly maintenance task has been completed successfully.
-      #       Here's a summary of the task:
-      #       - Performing weekly task...
-      #       - This is a fake task, just echoing some messages.
-      #       - Task completed successfully.
-      #       </p>
       - name: Send email
         uses: maful/github-actions-mailgun@main
         with:
@@ -47,7 +32,7 @@ jobs:
           from: ${{ secrets.FROM }}
           to: ${{ secrets.TO }}
           subject: 'Weekly Maintenance Completed'
-          body: |
+          html_body: |
             <!DOCTYPE html>
             <html>
             <head>
