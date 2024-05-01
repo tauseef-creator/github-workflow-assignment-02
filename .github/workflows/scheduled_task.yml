@@ -22,17 +22,16 @@ jobs:
           node-version: 20
 
       - name: Run weekly task
-        run: ./scripts/scheduled-task.sh
+        run: ./weekly-task.sh
 
-      - name: Create GitHub release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Send email notification
+        uses: mailgun/action@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Weekly Maintenance - ${{ github.run_id }}
-          body: |
+          api_key: ${{ secrets.MAILGUN_API_KEY }}
+          domain: ${{ secrets.MAILGUN_DOMAIN }}
+          to: 'user@example.com'
+          subject: 'Weekly Maintenance Completed'
+          text: |
             The weekly maintenance task has been completed successfully.
             Here's a summary of the task:
 
