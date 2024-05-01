@@ -29,7 +29,7 @@ jobs:
         with:
           api_key: ${{ secrets.MAILGUN_API_KEY }}
           domain: ${{ secrets.MAILGUN_DOMAIN }}
-          to: 'user@example.com'
+          to: 'i211236@nu.edu.pk'
           subject: 'Weekly Maintenance Completed'
           text: |
             The weekly maintenance task has been completed successfully.
