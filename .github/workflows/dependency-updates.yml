@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   update-dependencies:
@@ -24,23 +27,8 @@ jobs:
       with:
         node-version: 20
 
-    - name: Setup Dependabot
-      uses: dependabot/dependabot-core@main
+    - name: Fetch dependency update metadata
+      id: fetch-metadata
+      uses: dependabot/fetch-metadata@v1
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        package-ecosystem: 'npm'
-        directory: '/'
-        versioning-strategy: 'lockfile-only'
-
-    - name: Check for dependency updates
-      run: |
-        if [ -n "$(git status --porcelain)" ]; then
-          echo "There are updates to dependencies"
-          git config --global user.email "dependabot@github.com"
-          git config --global user.name "Dependabot"
-          git add .
-          git commit -m "Update dependencies"
-          git push
-        else
-          echo "No updates to dependencies"
-        fi
+        github-token: ${{ secrets.GITHUB_TOKEN }}
