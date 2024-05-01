@@ -48,10 +48,26 @@ jobs:
           to: ${{ secrets.TO }}
           subject: 'Weekly Maintenance Completed'
           body: |
-            <p>The weekly maintenance task has been completed successfully.
-            Here's a summary of the task:
-            - Performing weekly task...
-            - This is a fake task, just echoing some messages.
-            - Task completed successfully.
-            </p>
-            
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                }
+                p {
+                  margin: 0;
+                  padding: 0;
+                }
+              </style>
+            </head>
+            <body>
+              <p>The weekly maintenance task has been completed successfully.</p>
+              <p><strong>Summary of the task:</strong></p>
+              <ul>
+                <li>Performing weekly task...</li>
+                <li>This is a fake task, just echoing some messages.</li>
+                <li>Task completed successfully.</li>
+              </ul>
+            </body>
+            </html>
