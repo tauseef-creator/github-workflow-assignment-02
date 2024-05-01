@@ -22,7 +22,7 @@ jobs:
           node-version: 20
 
       - name: Run weekly task
-        run: ./weekly-task.sh
+        run: ./scripts/scheduled-task.sh
 
       - name: Send email notification
         uses: mailgun/action@v2
