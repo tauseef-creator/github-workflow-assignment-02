@@ -1,12 +1,12 @@
 name: Scheduled Tasks
 
 on:
-#   schedule:
-#     # Run weekly on Sunday at 00:00 UTC
-#     - cron: '0 0 * * SUN'
+  # schedule:
+  #   # Run weekly on Sunday at 00:00 UTC
+  #   - cron: '0 0 * * SUN'
   push:
     branches:
-        - master
+      - master
 
 jobs:
   weekly-task:
@@ -24,17 +24,19 @@ jobs:
       - name: Run weekly task
         run: ./scripts/scheduled-task.sh
 
-      - name: Send email notification
-        uses: mailgun/action@v2
+      - name: Send Mail Action
+        id: sendmail
+        uses: vineetchoudhary/mailgun-action@master
         with:
-          api_key: ${{ secrets.MAILGUN_API_KEY }}
+          api-key: ${{ secrets.MAILGUN_API_KEY }}
           domain: ${{ secrets.MAILGUN_DOMAIN }}
-          to: 'i211236@nu.edu.pk'
+          to: ${{ secrets.TO }}
           subject: 'Weekly Maintenance Completed'
-          text: |
-            The weekly maintenance task has been completed successfully.
+          body: |
+            <p>The weekly maintenance task has been completed successfully.
             Here's a summary of the task:
 
             - Performing weekly task...
             - This is a fake task, just echoing some messages.
             - Task completed successfully.
+            </p>
