@@ -1,12 +1,10 @@
 name: Scheduled Tasks
 
 on:
-  # schedule:
-  #   # Run weekly on Sunday at 00:00 UTC
-  #   - cron: '0 0 * * SUN'
-  push:
-    branches:
-      - master
+  schedule:
+    # Run weekly on Sunday at 00:00 UTC
+    - cron: '0 0 * * SUN'
+
 
 jobs:
   weekly-task:

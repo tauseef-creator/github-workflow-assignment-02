@@ -1,0 +1,43 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run monthly on the 1st day at 00:00 UTC
+    - cron: '0 0 1 * *'
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js 20.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20
+
+    - name: Setup Dependabot
+      uses: dependabot/dependabot-core@main
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        package-ecosystem: 'npm'
+        directory: '/'
+        versioning-strategy: 'lockfile-only'
+
+    - name: Check for dependency updates
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "There are updates to dependencies"
+          git config --global user.email "dependabot@github.com"
+          git config --global user.name "Dependabot"
+          git add .
+          git commit -m "Update dependencies"
+          git push
+        else
+          echo "No updates to dependencies"
+        fi
