@@ -4,6 +4,12 @@ on:
   schedule:
     # Run monthly on the 1st day at 00:00 UTC
     - cron: '0 0 1 * *'
+  push:
+    branches:
+      - master
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   update-dependencies:
