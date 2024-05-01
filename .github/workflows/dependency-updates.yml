@@ -10,6 +10,7 @@ on:
     paths:
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/dependency-updates.yml'
 
 jobs:
   update-dependencies:
