@@ -1,12 +1,15 @@
-name: Documentation Deployment
+name: Documentation
 
 on:
   push:
     branches:
       - master
 
+    # pull_request:
+    #   branches: [ main, master ]
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -15,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20.x'
+          node-version: 16
 
       - name: Install dependencies
         run: npm install
@@ -23,23 +26,11 @@ jobs:
       - name: Build documentation
         run: npm run docs:build
 
-      - name: Clean existing contents
-        run: |
-          rm -rf *  # Warning: This will remove all files in the current directory. Be cautious with this command.
-          echo "Cleaned up existing files."
-
       - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@v4
+        # run: |
+        #   echo "Deploying documentation..."
+        #   sleep 3
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          token: ${{ secrets.GH_ACTIONS_REPO_ACCESS }}
-          branch: master  # Ensure this is the branch you want to deploy to
-          folder: build/docs
-          clean: true  # Ensures the deployment folder is clean before deploying
-          
-
-      - name: Debugging deployment
-        if: failure()  # This step runs if the previous steps fail
-        run: |
-          echo "Deployment failed with exit code ${{ steps.deploy.outcome }}"
-          git status
-          git log -1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
