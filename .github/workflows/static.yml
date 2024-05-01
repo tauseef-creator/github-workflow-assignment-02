@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Documentation deployment
 
 on:
   # Runs on pushes targeting the default branch
@@ -33,11 +33,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Create new directory and copy file
+        run: |
+          mkdir artifact
+          cp ./docs/API.md artifact/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload only the docs/api.md file
-          path: './docs/API.md'
+          # Upload the new directory
+          path: './artifact'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
