@@ -1,0 +1,41 @@
+name: Scheduled Tasks
+
+on:
+#   schedule:
+#     # Run weekly on Sunday at 00:00 UTC
+#     - cron: '0 0 * * SUN'
+  push:
+    branches:
+        - master
+
+jobs:
+  weekly-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Run weekly task
+        run: ./weekly-task.sh
+
+      - name: Create GitHub release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Weekly Maintenance - ${{ github.run_id }}
+          body: |
+            The weekly maintenance task has been completed successfully.
+            Here's a summary of the task:
+
+            - Performing weekly task...
+            - This is a fake task, just echoing some messages.
+            - Task completed successfully.
