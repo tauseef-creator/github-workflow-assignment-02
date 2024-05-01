@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "test": "echo Success",
     "docs:build": "mkdir -p build/docs && cp -R docs/* build/docs/"
-
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
